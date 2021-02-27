@@ -77,6 +77,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.2.0</version>
+                <configuration>
+                    <user>sa</user>
+                    <password></password>
+                    <url>jdbc:hsqldb:.</url>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
