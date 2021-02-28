@@ -17,6 +17,19 @@ public class Client {
     @Column(name = "passport_number")
     private String passportNumber;
 
+
+    @JoinColumn(name = "bank_id")
+    @OneToOne
+    private Bank bank;
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
     public Client(){
 
     }
@@ -69,4 +82,15 @@ public class Client {
         this.passportNumber = passportNumber;
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", passportNumber='" + passportNumber + '\'' +
+                ", bank=" + bank +
+                '}';
+    }
 }
