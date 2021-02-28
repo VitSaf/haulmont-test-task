@@ -3,7 +3,7 @@ package com.task.utils;
 import org.flywaydb.core.Flyway;
 
 import java.sql.*;
-
+@Deprecated
 public class DbCreator {
     private final static String  DB_URL = "jdbc:hsqldb:BankDB";
     private final static String DB_USER = "sa";
@@ -12,14 +12,11 @@ public class DbCreator {
     private final  Connection con;
 
 
-    public DbCreator() throws ClassNotFoundException, SQLException {
+    DbCreator() throws ClassNotFoundException, SQLException {
         Class.forName(DB_DRIVER);
         con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
 
-    public Connection getCon() {
-        return con;
-    }
 
     @Deprecated
     public void tryConnWithCreating(){
@@ -41,7 +38,7 @@ public class DbCreator {
             throwables.printStackTrace();
         }
     }
-
+    @Deprecated
     public void tryFlyway(){
         try {
             printResult(con.prepareStatement("SELECT cl.*, cr.* FROM client cl FULL JOIN credit cr ON cr.bank_id = cl.bank_id").executeQuery());
@@ -49,7 +46,7 @@ public class DbCreator {
             e.printStackTrace();
         }
     }
-
+    @Deprecated
     public void printResult(ResultSet rs) throws SQLException {
         ResultSetMetaData metaData = rs.getMetaData();
         System.out.println("Query result is:");
@@ -62,6 +59,7 @@ public class DbCreator {
                 System.out.println(s);
             }
     }
+    @Deprecated
     public static void migrate(){
         Flyway flyway = Flyway.configure().dataSource(DB_URL, DB_USER, DB_PASSWORD).load();
         flyway.migrate();

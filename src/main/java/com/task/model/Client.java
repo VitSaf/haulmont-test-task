@@ -1,6 +1,7 @@
 package com.task.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "client")
 @Table(name = "client")
@@ -34,8 +35,7 @@ public class Client {
 
     }
 
-    public Client(int id, String fullName, String phoneNumber, String email, String passportNumber) {
-        this.id = id;
+    public Client(String fullName, String phoneNumber, String email, String passportNumber) {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.email = email;
@@ -92,5 +92,18 @@ public class Client {
                 ", passportNumber='" + passportNumber + '\'' +
                 ", bank=" + bank +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+        Client client = (Client) o;
+        return getId() == client.getId() && getFullName().equals(client.getFullName()) && Objects.equals(getPhoneNumber(), client.getPhoneNumber()) && Objects.equals(getEmail(), client.getEmail()) && Objects.equals(getPassportNumber(), client.getPassportNumber()) && getBank().equals(client.getBank());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFullName(), getPhoneNumber(), getEmail(), getPassportNumber(), getBank());
     }
 }

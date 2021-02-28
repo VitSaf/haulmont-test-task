@@ -2,6 +2,7 @@ package com.task.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity(name = "payments")
 @Table(name = "payments")
@@ -25,8 +26,7 @@ public class Payment {
 
     public Payment(){}
 
-    public Payment(int id, Date payday, double sumOfPayment, double creditPartOfPayment, double ratePartOfPayment, CreditOffer creditOffer) {
-        this.id = id;
+    public Payment(Date payday, double sumOfPayment, double creditPartOfPayment, double ratePartOfPayment, CreditOffer creditOffer) {
         this.payday = payday;
         this.sumOfPayment = sumOfPayment;
         this.creditPartOfPayment = creditPartOfPayment;
@@ -92,5 +92,18 @@ public class Payment {
                 ", ratePartOfPayment=" + ratePartOfPayment +
 //                ", offer" + creditOffer +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Payment)) return false;
+        Payment payment = (Payment) o;
+        return getId() == payment.getId() && Double.compare(payment.getSumOfPayment(), getSumOfPayment()) == 0 && Double.compare(payment.getCreditPartOfPayment(), getCreditPartOfPayment()) == 0 && Double.compare(payment.getRatePartOfPayment(), getRatePartOfPayment()) == 0 && Objects.equals(getPayday(), payment.getPayday()) && Objects.equals(getCreditOffer(), payment.getCreditOffer());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getPayday(), getSumOfPayment(), getCreditPartOfPayment(), getRatePartOfPayment(), getCreditOffer());
     }
 }

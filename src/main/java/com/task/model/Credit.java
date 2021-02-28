@@ -1,6 +1,7 @@
 package com.task.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "credit")
 @Table(name = "credit")
@@ -20,8 +21,7 @@ public class Credit {
 
     public Credit(){}
 
-    public Credit(int id, double creditLimit, double rate, Bank bank) {
-        this.id = id;
+    public Credit(double creditLimit, double rate, Bank bank) {
         this.creditLimit = creditLimit;
         this.rate = rate;
         this.bank = bank;
@@ -67,5 +67,18 @@ public class Credit {
                 ", rate=" + rate +
                 ", bank=" + bank +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Credit)) return false;
+        Credit credit = (Credit) o;
+        return getId() == credit.getId() && Double.compare(credit.getCreditLimit(), getCreditLimit()) == 0 && Double.compare(credit.getRate(), getRate()) == 0 && getBank().equals(credit.getBank());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCreditLimit(), getRate(), getBank());
     }
 }
