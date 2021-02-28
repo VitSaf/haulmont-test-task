@@ -1,14 +1,14 @@
-package model;
+package com.task.model;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "clients")
+@Entity(name = "client")
+@Table(name = "client")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_id")
-    private long id;
+    private int id;
     @Column(name = "full_name")
     private String fullName;
     @Column(name = "phone_number")
@@ -21,7 +21,7 @@ public class Client {
 
     }
 
-    public Client(long id, String fullName, String phoneNumber, String email, String passportNumber) {
+    public Client(int id, String fullName, String phoneNumber, String email, String passportNumber) {
         this.id = id;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
@@ -33,7 +33,7 @@ public class Client {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

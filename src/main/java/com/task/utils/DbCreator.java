@@ -1,11 +1,11 @@
-package utils;
+package com.task.utils;
 
 import org.flywaydb.core.Flyway;
 
 import java.sql.*;
 
 public class DbCreator {
-    private final static String  DB_URL = "jdbc:hsqldb:.";
+    private final static String  DB_URL = "jdbc:hsqldb:BankDB";
     private final static String DB_USER = "sa";
     private final static String DB_PASSWORD = "";
     private final static String DB_DRIVER = "org.hsqldb.jdbcDriver";
@@ -62,23 +62,23 @@ public class DbCreator {
                 System.out.println(s);
             }
     }
-    public void migrate(){
+    public static void migrate(){
         Flyway flyway = Flyway.configure().dataSource(DB_URL, DB_USER, DB_PASSWORD).load();
         flyway.migrate();
     }
 
-    public static void main(String[] args) {
-        DbCreator tester = null;
-        try {
-            tester = new DbCreator();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-        tester.migrate();
-        tester.tryFlyway();
-        //tester.tryConnWithCreating();
-    }
+//    public static void main(String[] args) {
+//        DbCreator tester = null;
+//        try {
+//            tester = new DbCreator();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return;
+//        }
+//        DbCreator.migrate();
+//        tester.tryFlyway();
+//        //tester.tryConnWithCreating();
+//    }
 
 
 }
