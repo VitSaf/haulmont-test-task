@@ -10,9 +10,11 @@ import java.util.List;
 public interface OfferService {
     List<CreditOffer> findAll();
     CreditOffer findById(int payment_id);
-    List<CreditOffer> findByClient(Client client);
+    List<CreditOffer> findByClients(List<Client> client);
 
     CreditOffer createCreditOffer(CreditOffer newCreditOffer, Client client, Credit credit);
     CreditOffer updateCreditOffer(int creditOfferId, CreditOffer updatedCreditOffer, Client client, Credit credit);
     void removeCreditOffer(int creditOfferId);
+
+    List<CreditOffer> getByClientAndCredit(Client client, Credit credit);
 }

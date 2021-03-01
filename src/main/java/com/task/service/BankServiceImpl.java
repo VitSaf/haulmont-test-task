@@ -17,8 +17,15 @@ public class BankServiceImpl implements BankService{
         return bankRepository.findAll();
     }
 
+
+
     @Override
     public Bank findById(int bank_id) {
         return bankRepository.findById(bank_id);
+    }
+
+    @Override
+    public Bank findByName(String bank_name) {
+        return bankRepository.findByName(bank_name);
     }
 }

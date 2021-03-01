@@ -12,10 +12,10 @@ public class CreditOffer {
     @Column(name = "offer_id")
     private int id;
     @JoinColumn(name = "client_id")
-    @OneToOne
+    @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
     private Client client;
     @JoinColumn(name = "credit_id")
-    @OneToOne
+    @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
     private Credit credit;
     @Column(name = "credit_full_sum")
     private double sizeOfCredit;

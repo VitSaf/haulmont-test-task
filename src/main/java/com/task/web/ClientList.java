@@ -52,7 +52,7 @@ public class ClientList extends AppLayout {
         grid3 = new Grid<>();
         grid4 = new Grid<>();
 
-        linkCreate = new RouterLink("Добавить клиента",AddClient.class, 0);
+//        linkCreate = new RouterLink("Добавить клиента",AddClient.class, 0);
         layout.add(linkCreate);
         layout.add(grid);
         layout.add(grid1);
@@ -100,9 +100,9 @@ public class ClientList extends AppLayout {
 
 
             //Добавим кнопку удаления и редактирования
-            grid.addColumn(new NativeButtonRenderer<>("Редактировать", client -> {
-                UI.getCurrent().navigate(AddClient.class);
-            }));
+//            grid.addColumn(new NativeButtonRenderer<>("Редактировать", client -> {
+//                UI.getCurrent().navigate(AddClient.class);
+//            }));
             grid.addColumn(new NativeButtonRenderer<>("Удалить", client -> {
                 Dialog dialog = new Dialog();
                 Button confirm = new Button("Удалить");

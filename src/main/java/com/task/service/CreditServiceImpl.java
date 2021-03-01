@@ -47,4 +47,9 @@ public class CreditServiceImpl implements CreditService{
     public void removeCredit(int creditId) {
         creditRepository.deleteById(creditId);
     }
+
+    @Override
+    public List<Credit> getByBank(Bank bank) {
+        return creditRepository.findByBank(bank);
+    }
 }

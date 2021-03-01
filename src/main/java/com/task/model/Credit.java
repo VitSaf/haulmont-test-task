@@ -1,5 +1,8 @@
 package com.task.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -16,7 +19,7 @@ public class Credit {
     private double rate;
 
     @JoinColumn(name = "bank_id")
-    @OneToOne
+    @ManyToOne
     private Bank bank;
 
     public Credit(){}

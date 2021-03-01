@@ -1,6 +1,7 @@
 package com.task.repositories;
 
 import com.task.model.Client;
+import com.task.model.Credit;
 import com.task.model.CreditOffer;
 import com.task.model.Payment;
 import org.springframework.data.repository.CrudRepository;
@@ -11,5 +12,6 @@ import java.util.List;
 public interface OffersRepository extends CrudRepository<CreditOffer, Integer> {
     List<CreditOffer> findAll();
     CreditOffer findById(int offer_id);
+    List<CreditOffer> findByClientAndCredit(Client client, Credit credit);
     List<CreditOffer> findByClient(Client client);
 }

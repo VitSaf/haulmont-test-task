@@ -12,4 +12,5 @@ public interface CreditService {
     Credit createCredit(Credit newCredit, Bank bank);
     Credit updateCredit(int creditId, Credit updatedCredit, Bank bank);
     void removeCredit(int creditId);
+    List<Credit> getByBank(Bank bank);
 }

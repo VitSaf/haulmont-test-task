@@ -50,5 +50,10 @@ public class ClientServiceImpl implements ClientService {
         return clientRepo.findAll();
     }
 
+    @Override
+    public List<Client> getByBank(Bank bank) {
+        return clientRepo.findByBank(bank);
+    }
+
 
 }

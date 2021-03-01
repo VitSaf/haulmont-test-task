@@ -7,4 +7,5 @@ import java.util.List;
 public interface BankService {
     List<Bank> getAll();
     Bank findById(int bank_id);
+    Bank findByName(String bank_name);
 }

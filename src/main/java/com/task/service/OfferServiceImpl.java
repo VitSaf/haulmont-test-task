@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class OfferServiceImpl implements OfferService{
@@ -28,8 +29,12 @@ public class OfferServiceImpl implements OfferService{
     }
 
     @Override
-    public List<CreditOffer> findByClient(Client client) {
-        return offersRepository.findByClient(client);
+    public List<CreditOffer> findByClients(List<Client> clients) {
+        List<CreditOffer> offers = new ArrayList();
+        for(Client client:clients){
+            offers.addAll(offersRepository.findByClient(client));
+        }
+        return offers;
     }
 
     @Override
@@ -58,5 +63,10 @@ public class OfferServiceImpl implements OfferService{
     @Override
     public void removeCreditOffer(int creditOfferId) {
         offersRepository.deleteById(creditOfferId);
+    }
+
+    @Override
+    public List<CreditOffer> getByClientAndCredit(Client client, Credit credit) {
+        return offersRepository.findByClientAndCredit(client, credit);
     }
 }

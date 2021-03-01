@@ -13,4 +13,5 @@ public interface ClientService {
     Client updateClient(int clientId, Client updatedClient, Bank bank);
     void removeClient(int clientId);
     List<Client> getAll();
+    List<Client> getByBank(Bank bank);
 }

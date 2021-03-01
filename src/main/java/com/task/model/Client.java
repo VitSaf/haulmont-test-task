@@ -1,5 +1,8 @@
 package com.task.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -18,9 +21,8 @@ public class Client {
     @Column(name = "passport_number")
     private String passportNumber;
 
-
     @JoinColumn(name = "bank_id")
-    @OneToOne
+    @ManyToOne
     private Bank bank;
 
     public Bank getBank() {
@@ -42,7 +44,7 @@ public class Client {
         this.passportNumber = passportNumber;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

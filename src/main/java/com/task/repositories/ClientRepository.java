@@ -1,6 +1,7 @@
 package com.task.repositories;
 
 
+import com.task.model.Bank;
 import com.task.model.Client;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,6 @@ import java.util.List;
 public interface ClientRepository  extends CrudRepository<Client, Integer> {
     List<Client> findAll();
     Client findById(int client_id);
+    List<Client> findByBank(Bank bank);
+
 }

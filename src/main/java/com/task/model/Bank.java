@@ -1,6 +1,10 @@
 package com.task.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "bank")
@@ -12,6 +16,19 @@ public class Bank {
     private int id;
     @Column(name = "bank_name")
     private String name;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "bank", orphanRemoval = true,cascade=CascadeType.ALL)
+    private List<Client> clients;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "bank", orphanRemoval = true,cascade=CascadeType.ALL)
+    private List<Credit> credits;
+
+    public int getNumberOfClients(){
+        return clients.size();
+    }
+    public int getNumberOfCredits(){
+        return credits.size();
+    }
 
     public Bank(){}
 
@@ -49,6 +66,22 @@ public class Bank {
         if (!(o instanceof Bank)) return false;
         Bank bank = (Bank) o;
         return getId() == bank.getId() && getName().equals(bank.getName());
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
+    }
+
+    public List<Credit> getCredits() {
+        return credits;
+    }
+
+    public void setCredits(List<Credit> credits) {
+        this.credits = credits;
     }
 
     @Override
