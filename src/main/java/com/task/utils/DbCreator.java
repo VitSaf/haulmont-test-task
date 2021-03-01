@@ -41,7 +41,7 @@ public class DbCreator {
     @Deprecated
     public void tryFlyway(){
         try {
-            printResult(con.prepareStatement("SELECT cl.*, cr.* FROM client cl FULL JOIN credit cr ON cr.bank_id = cl.bank_id").executeQuery());
+            printResult(con.prepareStatement("SELECT * FROM credit_offer co WHERE co.client_id = 2").executeQuery());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,7 +72,7 @@ public class DbCreator {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //            return;
-//        }
+//       }
 //        DbCreator.migrate();
 //        tester.tryFlyway();
 //        //tester.tryConnWithCreating();

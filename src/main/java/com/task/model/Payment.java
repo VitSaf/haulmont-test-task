@@ -84,15 +84,14 @@ public class Payment {
 
     @Override
     public String toString() {
-        return "Payment{" +
-                "id=" + id +
-                ", payday=" + payday +
-                ", sumOfPayment=" + sumOfPayment +
-                ", creditPartOfPayment=" + creditPartOfPayment +
-                ", ratePartOfPayment=" + ratePartOfPayment +
-//                ", offer" + creditOffer +
-                '}';
+        return  " Дата выплаты=" + payday + "\n"+
+                ", Сумма=" + (creditPartOfPayment + ratePartOfPayment)+ "\n"+
+                ", Выплата за кредит=" + creditPartOfPayment + "\n"+
+                ", Выплата по процентам=" + ratePartOfPayment + "\n";
     }
+
+
+
 
     @Override
     public boolean equals(Object o) {

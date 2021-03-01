@@ -1,6 +1,9 @@
 package com.task.model;
 
+import com.task.utils.PaymentsCalculator;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,8 +25,19 @@ public class CreditOffer {
     @Column(name = "duration_in_months")
     private int durationInMonths;
 
+
     @OneToMany(mappedBy = "creditOffer",fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Payment> payments;
+
+    public double getSumOfPayments() {
+        double sum = 0;
+        for(Payment p:payments){
+            sum+=p.getCreditPartOfPayment()+ p.getRatePartOfPayment();
+        }
+        return sum;
+    }
+
+
 
     public CreditOffer(){}
 
@@ -34,6 +48,11 @@ public class CreditOffer {
         this.durationInMonths = durationInMonths;
         this.payments = payments;
     }
+
+    public int getClientId() {
+        return client.getId();
+    }
+
 
     public int getId() {
         return id;
@@ -86,12 +105,11 @@ public class CreditOffer {
     @Override
     public String toString() {
         return "CreditOffer{" +
-                "id=" + id +
-                ", client=" + client +
-                ", credit=" + credit +
-                ", sizeOfCredit=" + sizeOfCredit +
-                ", durationInMonths=" + durationInMonths +
-                ", payments=" + payments +
+                ", client=" + client.getFullName() + "\n"+
+                ", credit=" + credit + "\n"+
+                ", sizeOfCredit=" + sizeOfCredit + "\n"+
+                ", durationInMonths=" + durationInMonths + "\n"+
+                ", payments=" + payments + "\n"+
                 '}';
     }
 
@@ -106,5 +124,10 @@ public class CreditOffer {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getClient(), getCredit(), getSizeOfCredit(), getDurationInMonths(), getPayments());
+    }
+
+    public List<Payment> getPaymentTmp(){
+        System.out.println(credit.getCreditLimit() +  " " + credit.getRate());
+        return PaymentsCalculator.calcPayments(credit.getCreditLimit(),credit.getRate(), durationInMonths);
     }
 }

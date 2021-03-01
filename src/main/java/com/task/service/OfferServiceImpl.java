@@ -18,6 +18,14 @@ public class OfferServiceImpl implements OfferService{
     OffersRepository offersRepository;
     @Autowired
     PaymentService paymentService;
+    @Autowired
+    CreditService creditService;
+    @Autowired
+    ClientService clientService;
+
+
+
+
     @Override
     public List<CreditOffer> findAll() {
         return offersRepository.findAll();
@@ -29,22 +37,17 @@ public class OfferServiceImpl implements OfferService{
     }
 
     @Override
-    public List<CreditOffer> findByClients(List<Client> clients) {
-        List<CreditOffer> offers = new ArrayList();
-        for(Client client:clients){
-            offers.addAll(offersRepository.findByClient(client));
-        }
-        return offers;
+    public List<CreditOffer> getOffers(List<Client> clients) {
+        List<CreditOffer>  allOffers = offersRepository.findAll();
+        List<CreditOffer> resultOffers = new ArrayList<>();
+        for(Client client:clients)
+            for(CreditOffer offer:allOffers)
+                if (client.equals(offer.getClient()))
+                    resultOffers.add(offer);
+        return resultOffers;
+
     }
 
-    @Override
-    public CreditOffer createCreditOffer(CreditOffer newCreditOffer, Client client, Credit credit) {
-        newCreditOffer.setClient(client);
-        newCreditOffer.setCredit(credit);
-        List<Payment> payments = paymentService.createPayments(PaymentsCalculator.calcPayments(credit.getCreditLimit(), credit.getRate(), newCreditOffer.getDurationInMonths()),newCreditOffer);
-        newCreditOffer.setPayments(payments);
-        return offersRepository.save(newCreditOffer);
-    }
 
     @Override
     public CreditOffer updateCreditOffer(int creditOfferId, CreditOffer updatedCreditOffer, Client client, Credit credit) {
@@ -69,4 +72,20 @@ public class OfferServiceImpl implements OfferService{
     public List<CreditOffer> getByClientAndCredit(Client client, Credit credit) {
         return offersRepository.findByClientAndCredit(client, credit);
     }
+
+    //TODO!!!!!
+    @Override
+    public CreditOffer createOffer(int clientId, int creditId, int durationInMonths) {
+        Credit credit = creditService.findById(creditId);
+        CreditOffer co = new CreditOffer(clientService.getById(clientId), credit, credit.getCreditLimit(), durationInMonths,null);
+//        System.out.println(co);
+//        for(Payment p:payments)
+//            p.setCreditOffer(co);
+//        System.out.println(payments);
+//        co.setPayments(payments);
+//        paymentService.createPayments(payments);
+        return offersRepository.save(co);
+    }
+
+
 }

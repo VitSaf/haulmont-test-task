@@ -23,3 +23,4 @@ public class PaymentsCalculator {
         return payments;
     }
 }
+

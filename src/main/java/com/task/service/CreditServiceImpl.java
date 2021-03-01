@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,16 +33,13 @@ public class CreditServiceImpl implements CreditService{
     }
 
     @Override
-    public Credit updateCredit(int creditId, Credit updatedCredit, Bank bank) {
+    public Credit updateCredit(int creditId, double creditLimit, double creditRate) {
         Credit credit = creditRepository.findById(creditId);
-
-        BeanUtils.copyProperties(updatedCredit, credit, "id", "bank");
-
-        if (!credit.getBank().equals(bank))
-            credit.setBank(bank);
-
+        credit.setCreditLimit(creditLimit);
+        credit.setRate(creditRate);
         return creditRepository.save(credit);
     }
+
 
     @Override
     public void removeCredit(int creditId) {
@@ -50,6 +48,11 @@ public class CreditServiceImpl implements CreditService{
 
     @Override
     public List<Credit> getByBank(Bank bank) {
-        return creditRepository.findByBank(bank);
+        List result = new ArrayList<Credit>();
+        for(Credit credit:creditRepository.findAll())
+            if (credit.getBank().equals(bank)){
+                result.add(credit);
+            }
+        return result;
     }
 }

@@ -10,7 +10,8 @@ public interface CreditService {
     List<Credit> getAll();
     Credit findById(int credit_id);
     Credit createCredit(Credit newCredit, Bank bank);
-    Credit updateCredit(int creditId, Credit updatedCredit, Bank bank);
+    Credit updateCredit(int creditId, double creditLimit, double creditRate);
     void removeCredit(int creditId);
     List<Credit> getByBank(Bank bank);
+
 }

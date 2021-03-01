@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,16 +30,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client updateClient(int clientId, Client updatedClient, Bank bank) {
-        Client client = clientRepo.findById(clientId);
-
-        BeanUtils.copyProperties(updatedClient, client, "id", "bank");
-
-        if (!client.getBank().equals(bank))
-            client.setBank(bank);
-
-        return clientRepo.save(client);
+    public Client updateClient(int id, String name, String phone, String mail, String passport) {
+        Client client = clientRepo.findById(id);
+        client.setFullName(name);
+        client.setPhoneNumber(phone);
+        client.setEmail(mail);
+        client.setPassportNumber(passport);
+        clientRepo.save(client);
+        return client;
     }
+
 
     @Override
     public void removeClient(int clientId) {
@@ -52,7 +53,17 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Client> getByBank(Bank bank) {
-        return clientRepo.findByBank(bank);
+        List result = new  ArrayList<Client>();
+        for(Client client:clientRepo.findAll())
+            if (client.getBank().equals(bank)){
+                result.add(client);
+            }
+        return result;
+    }
+
+    @Override
+    public void removeClient(Client client) {
+        clientRepo.delete(client);
     }
 
 

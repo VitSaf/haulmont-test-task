@@ -44,6 +44,15 @@ public class Client {
         this.passportNumber = passportNumber;
     }
 
+    public Client(int id, String fullName, String phoneNumber, String email, String passportNumber, Bank bank) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.passportNumber = passportNumber;
+        this.bank = bank;
+    }
+
     public int getId() {
         return id;
     }
@@ -83,6 +92,12 @@ public class Client {
     public void setPassportNumber(String passportNumber) {
         this.passportNumber = passportNumber;
     }
+
+//    @Override
+//    public String toString() {
+//        return fullName;
+//    }
+
 
     @Override
     public String toString() {

@@ -64,12 +64,8 @@ public class Credit {
 
     @Override
     public String toString() {
-        return "Credit{" +
-                "id=" + id +
-                ", creditLimit=" + creditLimit +
-                ", rate=" + rate +
-                ", bank=" + bank +
-                '}';
+        return "Размер кредита:" + creditLimit + "\n"+
+                ", Проценты:" + rate + "\n";
     }
 
     @Override

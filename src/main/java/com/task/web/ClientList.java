@@ -27,7 +27,7 @@ public class ClientList extends AppLayout {
     Grid<Bank> grid3;
     Grid<CreditOffer> grid4;
 
-    RouterLink linkCreate;
+
 
     private final ClientService clientService;
     private final CreditService creditService;
@@ -44,6 +44,8 @@ public class ClientList extends AppLayout {
         this.bankService = bankService;
         this.offerService = offerService;
 
+
+
         layout = new VerticalLayout();
 
         grid = new Grid<>();
@@ -52,8 +54,8 @@ public class ClientList extends AppLayout {
         grid3 = new Grid<>();
         grid4 = new Grid<>();
 
-//        linkCreate = new RouterLink("Добавить клиента",AddClient.class, 0);
-        layout.add(linkCreate);
+        //linkCreate = new RouterLink("Добавить клиента",AddClient.class, 0);
+        //layout.add(linkCreate);
         layout.add(grid);
         layout.add(grid1);
         layout.add(grid2);

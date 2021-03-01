@@ -43,9 +43,8 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
-    public List<Payment> createPayments(List<Payment> newPayments, CreditOffer offer) {
+    public List<Payment> createPayments(List<Payment> newPayments) {
         for(Payment p : newPayments){
-            p.setCreditOffer(offer);
             paymentRepository.save(p);
         }
         return newPayments;
