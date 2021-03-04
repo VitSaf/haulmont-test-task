@@ -1,6 +1,8 @@
 package com.task.model;
 
 import com.task.utils.PaymentsCalculator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,19 +16,25 @@ public class CreditOffer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "offer_id")
     private int id;
-    @JoinColumn(name = "client_id")
-    @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
+
+
+    @OneToOne(cascade = CascadeType.ALL , orphanRemoval = true)
+    @JoinColumn(name="client_id")
     private Client client;
-    @JoinColumn(name = "credit_id")
-    @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL , orphanRemoval = true)
+    @JoinColumn(name="credit_id")
     private Credit credit;
+
     @Column(name = "credit_full_sum")
     private double sizeOfCredit;
     @Column(name = "duration_in_months")
     private int durationInMonths;
 
-
-    @OneToMany(mappedBy = "creditOffer",fetch = FetchType.EAGER, orphanRemoval = true)
+//оффер владелец выплат'
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "offer_id") // we need to duplicate the physical information
     private List<Payment> payments;
 
     public double getSumOfPayments() {
@@ -39,7 +47,8 @@ public class CreditOffer {
 
 
 
-    public CreditOffer(){}
+    public CreditOffer(){
+    }
 
     public CreditOffer(Client client, Credit credit, double sizeOfCredit, int durationInMonths, List<Payment> payments) {
         this.client = client;

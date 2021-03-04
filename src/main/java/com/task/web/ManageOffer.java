@@ -1,8 +1,9 @@
 package com.task.web;
 
-import com.task.model.Bank;
+import com.task.model.Client;
 import com.task.model.Credit;
-import com.task.service.BankService;
+import com.task.model.CreditOffer;
+import com.task.service.ClientService;
 import com.task.service.CreditService;
 import com.task.service.OfferService;
 import com.vaadin.flow.component.UI;
@@ -17,12 +18,11 @@ import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
-
 @Route("man_offer")
 public class ManageOffer extends AppLayout implements HasUrlParameter<Integer> {
     private final OfferService offerService;
-    private final BankService bankService;
+    private final CreditService creditService;
+    private final ClientService clientService;
 
     FormLayout offerForm;
     TextField clientIdField;
@@ -31,9 +31,10 @@ public class ManageOffer extends AppLayout implements HasUrlParameter<Integer> {
 
     Button saveOffer;
     @Autowired
-    public ManageOffer(OfferService offerService, BankService bankService) {
+    public ManageOffer(OfferService offerService, CreditService creditService, ClientService clientService) {
         this.offerService = offerService;
-        this.bankService = bankService;
+        this.creditService = creditService;
+        this.clientService = clientService;
 
         offerForm = new FormLayout();
         clientIdField = new TextField("id клиента, для которого предложение");
@@ -47,14 +48,19 @@ public class ManageOffer extends AppLayout implements HasUrlParameter<Integer> {
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, Integer integer) {
-        addToNavbar(new H3("Создание кредита"));
+        addToNavbar(new H3("Создание предложения о кредите"));
         fillForm();
     }
     private void fillForm(){
         saveOffer.addClickListener(clickEvent -> {
-            offerService.createOffer(Integer.valueOf(clientIdField.getValue()), Integer.valueOf(creditIdField.getValue()), Integer.valueOf(durationField.getValue()));
+            CreditOffer offer = new CreditOffer();
+            offer.setDurationInMonths(Integer.parseInt(durationField.getValue()));
+            Credit cred = creditService.findById(Integer.parseInt(creditIdField.getValue()));
+            Client cli = clientService.getById(Integer.parseInt(creditIdField.getValue()));
 
-            Notification notification = new Notification("Кредит успешно создан", 1000);
+            offerService.createOffer(offer,cli, cred);
+
+            Notification notification = new Notification("Предложение о кредит успешно создано", 1000);
             notification.setPosition(Notification.Position.MIDDLE);
             notification.addDetachListener(detachEvent -> {
                 UI.getCurrent().navigate(MainMenu.class);

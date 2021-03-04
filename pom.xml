@@ -76,7 +76,7 @@
 				<configuration>
 					<user>sa</user>
 					<password></password>
-					<url>jdbc:hsqldb:BankDB</url>
+					<url>jdbc:hsqldb:mem:BankDB;shutdown=true</url>
 				</configuration>
 			</plugin>
 		</plugins>

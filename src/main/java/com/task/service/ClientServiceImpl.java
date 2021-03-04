@@ -3,6 +3,8 @@ package com.task.service;
 
 import com.task.model.Bank;
 import com.task.model.Client;
+import com.task.model.Credit;
+import com.task.model.CreditOffer;
 import com.task.repositories.ClientRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client updateClient(int id, String name, String phone, String mail, String passport) {
-        Client client = clientRepo.findById(id);
-        client.setFullName(name);
-        client.setPhoneNumber(phone);
-        client.setEmail(mail);
-        client.setPassportNumber(passport);
-        clientRepo.save(client);
-        return client;
+    public Client updateClient(int clientId, Client updatedClient, Bank bank, CreditOffer offer) {
+        Client client = clientRepo.findById(clientId);
+        BeanUtils.copyProperties(updatedClient, client, "id", "bank","offer");
+        //if (!client.getBank().equals(bank))
+        client.setBank(bank);
+        //if (!client.getOffer().equals(offer))
+        client.setOffer(offer);
+        return clientRepo.save(client);
     }
 
 

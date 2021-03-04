@@ -12,7 +12,6 @@ public interface PaymentService {
     Payment getdById(int offer_id);
     List<Payment> getByCreditOffer(CreditOffer creditOffer);
 
-    List<Payment> createPayments(List<Payment> newPayments);
-    Payment updatePayment(int paymentId, Payment updatedPayment, CreditOffer offer);
+    void createPayments(List<Payment> newPayments);//, CreditOffer offer);
 
 }

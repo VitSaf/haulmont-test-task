@@ -14,13 +14,17 @@ public class Bank {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bank_id")
     private int id;
+
     @Column(name = "bank_name")
     private String name;
+
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "bank", orphanRemoval = true,cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "bank")
     private List<Client> clients;
+
+
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "bank", orphanRemoval = true,cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "bank")
     private List<Credit> credits;
 
     public int getNumberOfClients(){

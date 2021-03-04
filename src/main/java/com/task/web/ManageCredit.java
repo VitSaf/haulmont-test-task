@@ -76,7 +76,13 @@ public class ManageCredit extends AppLayout implements HasUrlParameter<Integer> 
 
             credit.setBank(bank);
             //System.out.println(client + "|" + client.getId()  + "|" + bank);
-            creditService.updateCredit(credit.getId(),credit.getCreditLimit(),credit.getRate());
+
+            if(id.equals(-1))
+                creditService.createCredit(credit,bank);
+            else{
+                creditService.updateCredit(credit.getId(),credit, bank,null);;
+            }
+
 
             Notification notification = new Notification(id.equals(-1) ? "Кредит успешно создан" : "Кредит был изменен", 1000);
             notification.setPosition(Notification.Position.MIDDLE);

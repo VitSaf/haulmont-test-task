@@ -45,23 +45,22 @@ public class OfferServiceImpl implements OfferService{
                 if (client.equals(offer.getClient()))
                     resultOffers.add(offer);
         return resultOffers;
-
     }
 
 
-    @Override
-    public CreditOffer updateCreditOffer(int creditOfferId, CreditOffer updatedCreditOffer, Client client, Credit credit) {
-        CreditOffer creditOffer = offersRepository.findById(creditOfferId);
-
-        BeanUtils.copyProperties(updatedCreditOffer, creditOffer, "id", "credit","client","payments");
-
-        if (!creditOffer.getCredit().equals(credit))
-            creditOffer.setCredit(credit);
-        if (!creditOffer.getClient().equals(client))
-            creditOffer.setClient(client);
-
-        return offersRepository.save(creditOffer);
-    }
+//    @Override
+//    public CreditOffer updateCreditOffer(int creditOfferId, CreditOffer updatedCreditOffer, Client client, Credit credit) {
+//        CreditOffer creditOffer = offersRepository.findById(creditOfferId);
+//
+//        BeanUtils.copyProperties(updatedCreditOffer, creditOffer, "id", "credit","client","payments");
+//
+//        if (!creditOffer.getCredit().equals(credit))
+//            creditOffer.setCredit(credit);
+//        if (!creditOffer.getClient().equals(client))
+//            creditOffer.setClient(client);
+//
+//        return offersRepository.save(creditOffer);
+//    }
 
     @Override
     public void removeCreditOffer(int creditOfferId) {
@@ -73,19 +72,21 @@ public class OfferServiceImpl implements OfferService{
         return offersRepository.findByClientAndCredit(client, credit);
     }
 
-    //TODO!!!!!
     @Override
-    public CreditOffer createOffer(int clientId, int creditId, int durationInMonths) {
-        Credit credit = creditService.findById(creditId);
-        CreditOffer co = new CreditOffer(clientService.getById(clientId), credit, credit.getCreditLimit(), durationInMonths,null);
-//        System.out.println(co);
-//        for(Payment p:payments)
-//            p.setCreditOffer(co);
-//        System.out.println(payments);
-//        co.setPayments(payments);
-//        paymentService.createPayments(payments);
-        return offersRepository.save(co);
+    public CreditOffer createOffer(CreditOffer offer, Client client, Credit credit) {
+        offer.setClient(client);
+        offer.setCredit(credit);
+        List<Payment> payments = PaymentsCalculator.calcPayments(credit.getCreditLimit(),credit.getRate(),offer.getDurationInMonths());
+        System.out.println(payments.get(0));
+        offer.setPayments(payments);
+        client.setOffer(offer);
+        credit.setOffer(offer);
+        paymentService.createPayments(payments);//,offer);
+        //clientService.updateClient(client.getId(), client,client.getBank(),offer);
+        //creditService.updateCredit(credit.getId(), credit, credit.getBank(),offer);
+        return offersRepository.save(offer);
     }
+
 
 
 }

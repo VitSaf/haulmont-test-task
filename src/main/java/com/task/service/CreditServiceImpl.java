@@ -3,6 +3,7 @@ package com.task.service;
 import com.task.model.Bank;
 import com.task.model.Client;
 import com.task.model.Credit;
+import com.task.model.CreditOffer;
 import com.task.repositories.CreditRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,13 @@ public class CreditServiceImpl implements CreditService{
     }
 
     @Override
-    public Credit updateCredit(int creditId, double creditLimit, double creditRate) {
+    public Credit updateCredit(int creditId, Credit updatedCredit, Bank bank, CreditOffer offer) {
         Credit credit = creditRepository.findById(creditId);
-        credit.setCreditLimit(creditLimit);
-        credit.setRate(creditRate);
+        BeanUtils.copyProperties(updatedCredit, credit, "id", "bank","offer");
+        if (!credit.getBank().equals(bank))
+            credit.setBank(bank);
+        if (!credit.getOffer().equals(offer))
+            credit.setOffer(offer);
         return creditRepository.save(credit);
     }
 

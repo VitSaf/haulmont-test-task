@@ -21,9 +21,13 @@ public class Client {
     @Column(name = "passport_number")
     private String passportNumber;
 
+// insertable = false, updatable = false вместо mappedBy делает класс g владельцем
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "bank_id")
-    @ManyToOne
     private Bank bank;
+    @Transient
+    @OneToOne(optional = true, mappedBy = "client")
+    private CreditOffer offer;
 
     public Bank getBank() {
         return bank;
@@ -35,6 +39,14 @@ public class Client {
 
     public Client(){
 
+    }
+
+    public CreditOffer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(CreditOffer offer) {
+        this.offer = offer;
     }
 
     public Client(String fullName, String phoneNumber, String email, String passportNumber) {
@@ -101,14 +113,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", fullName='" + fullName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", passportNumber='" + passportNumber + '\'' +
-                ", bank=" + bank +
-                '}';
+        return fullName;
     }
 
     @Override

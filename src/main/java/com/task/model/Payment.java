@@ -1,5 +1,8 @@
 package com.task.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
@@ -20,9 +23,7 @@ public class Payment {
     @Column(name = "rate_part_of_payment")
     private double ratePartOfPayment;
 
-    @ManyToOne
-    @JoinColumn(name = "offer_id")
-    private CreditOffer creditOffer;
+
 
     public Payment(){}
 
@@ -31,7 +32,7 @@ public class Payment {
         this.sumOfPayment = sumOfPayment;
         this.creditPartOfPayment = creditPartOfPayment;
         this.ratePartOfPayment = ratePartOfPayment;
-        this.creditOffer = creditOffer;
+        //this.creditOffer = creditOffer;
     }
 
     public int getId() {
@@ -73,14 +74,14 @@ public class Payment {
     public void setRatePartOfPayment(double ratePartOfPayment) {
         this.ratePartOfPayment = ratePartOfPayment;
     }
-
-    public CreditOffer getCreditOffer() {
-        return creditOffer;
-    }
-
-    public void setCreditOffer(CreditOffer creditOffer) {
-        this.creditOffer = creditOffer;
-    }
+//
+//    //public CreditOffer getCreditOffer() {
+//        return creditOffer;
+//    }
+//
+//    public void setCreditOffer(CreditOffer creditOffer) {
+//        this.creditOffer = creditOffer;
+//    }
 
     @Override
     public String toString() {
@@ -93,16 +94,5 @@ public class Payment {
 
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Payment)) return false;
-        Payment payment = (Payment) o;
-        return getId() == payment.getId() && Double.compare(payment.getSumOfPayment(), getSumOfPayment()) == 0 && Double.compare(payment.getCreditPartOfPayment(), getCreditPartOfPayment()) == 0 && Double.compare(payment.getRatePartOfPayment(), getRatePartOfPayment()) == 0 && Objects.equals(getPayday(), payment.getPayday()) && Objects.equals(getCreditOffer(), payment.getCreditOffer());
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getPayday(), getSumOfPayment(), getCreditPartOfPayment(), getRatePartOfPayment(), getCreditOffer());
-    }
 }

@@ -25,17 +25,16 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
 
-
-    @Override
-    public Payment updatePayment(int paymentId, Payment updatedPayment, CreditOffer offer) {
-        Payment payment = paymentRepository.findById(paymentId);
-        BeanUtils.copyProperties(updatedPayment, payment, "id", "creditOffer");
-
-        if (!payment.getCreditOffer().equals(offer))
-            payment.setCreditOffer(offer);
-
-        return paymentRepository.save(payment);
-    }
+//    @Override
+//    public Payment updatePayment(int paymentId, Payment updatedPayment, CreditOffer offer) {
+//        Payment payment = paymentRepository.findById(paymentId);
+//        BeanUtils.copyProperties(updatedPayment, payment, "id", "creditOffer");
+//
+//        if (!payment.getCreditOffer().equals(offer))
+//            payment.setCreditOffer(offer);
+//
+//        return paymentRepository.save(payment);
+//    }
 
     @Override
     public List<Payment> getByCreditOffer(CreditOffer creditOffer) {
@@ -43,10 +42,11 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
-    public List<Payment> createPayments(List<Payment> newPayments) {
+    public void createPayments(List<Payment> newPayments){//, CreditOffer offer) {
         for(Payment p : newPayments){
+            //p.setCreditOffer(offer);
             paymentRepository.save(p);
         }
-        return newPayments;
+
     }
 }

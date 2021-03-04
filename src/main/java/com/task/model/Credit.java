@@ -18,9 +18,13 @@ public class Credit {
     @Column(name = "rate")
     private double rate;
 
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "bank_id")
-    @ManyToOne
     private Bank bank;
+    @Transient
+    @OneToOne(optional = true, mappedBy = "credit")
+ //   @JoinColumn(name = "offer_id")
+    private CreditOffer offer;
 
     public Credit(){}
 
@@ -28,6 +32,14 @@ public class Credit {
         this.creditLimit = creditLimit;
         this.rate = rate;
         this.bank = bank;
+    }
+
+    public CreditOffer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(CreditOffer offer) {
+        this.offer = offer;
     }
 
     public int getId() {

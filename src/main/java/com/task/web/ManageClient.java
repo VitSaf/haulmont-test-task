@@ -81,7 +81,7 @@ public class ManageClient extends AppLayout implements HasUrlParameter<Integer> 
             client.setPassportNumber(passportNumberField.getValue());
             client.setBank(bank);
             //System.out.println(client + "|" + client.getId()  + "|" + bank);
-            clientService.updateClient(client.getId(),client.getFullName(),client.getPhoneNumber(),client.getEmail(), client.getPassportNumber());
+            //clientService.updateClient(client.getId(),client.getFullName(),client.getPhoneNumber(),client.getEmail(), client.getPassportNumber());
 
             Notification notification = new Notification(id.equals(-1) ? "Клиент успешно создан" : "Клиент был изменен", 1000);
             notification.setPosition(Notification.Position.MIDDLE);
